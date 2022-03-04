@@ -2,8 +2,9 @@ package com.du.FeheadStudio.entity;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+
 import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
 
 /**
  * <p>
@@ -13,6 +14,7 @@ import io.swagger.annotations.ApiModelProperty;
  * @author Du425
  * @since 2022-03-04
  */
+@Data
 @ApiModel(value = "User对象", description = "")
 public class User implements Serializable {
 
@@ -31,63 +33,4 @@ public class User implements Serializable {
     private Integer role;
 
 
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public String getTelephone() {
-        return telephone;
-    }
-
-    public void setTelephone(String telephone) {
-        this.telephone = telephone;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public LocalDateTime getRegisterDate() {
-        return registerDate;
-    }
-
-    public void setRegisterDate(LocalDateTime registerDate) {
-        this.registerDate = registerDate;
-    }
-
-    public Integer getRole() {
-        return role;
-    }
-
-    public void setRole(Integer role) {
-        this.role = role;
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-        "userId=" + userId +
-        ", userName=" + userName +
-        ", telephone=" + telephone +
-        ", password=" + password +
-        ", registerDate=" + registerDate +
-        ", role=" + role +
-        "}";
-    }
 }
