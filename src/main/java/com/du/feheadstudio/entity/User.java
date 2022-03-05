@@ -2,8 +2,10 @@ package com.du.feheadstudio.entity;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 /**
@@ -22,14 +24,26 @@ public class User implements Serializable {
 
     private String userId;
 
-    private String userName;
+    private String nickName;
 
     private String telephone;
 
     private String password;
 
+    private String email;
+
+    private String headImgId;
+
+    private String sex;
+
+    private Date birthDate;
+
+    @ApiModelProperty("个人简介")
+    private String personalBrief;
+
     private LocalDateTime registerDate;
 
+    @ApiModelProperty("数字代表角色")
     private Integer role;
 
 

@@ -6,6 +6,7 @@ import lombok.Data;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * <p>
@@ -30,7 +31,7 @@ public class Article implements Serializable {
     private String content;
 
     @ApiModelProperty("图片url")
-    private String cover;
+    private String coverImgId;
 
     private String abstracts;
 
@@ -38,12 +39,17 @@ public class Article implements Serializable {
 
     private String columnId;
 
+    @ApiModelProperty("0公开 1隐私")
     private Integer publishMethod;
 
-    private Integer isPublished;
+    @ApiModelProperty("0已发布 1未发布")
+    private Integer published;
 
     private LocalDateTime publishTime;
 
     private Integer viewNum;
+
+    @ApiModelProperty("0true 1false，是否置顶")
+    public Integer top;
 
 }

@@ -3,6 +3,7 @@ package com.du.feheadstudio.entity;
 import java.io.Serializable;
 
 import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 /**
@@ -26,5 +27,8 @@ public class Column implements Serializable {
     private String columnCover;
 
     private Integer totalArticleNum;
+
+    @ApiModelProperty("0true 1false，是否置顶")
+    public Integer top;
 
 }
