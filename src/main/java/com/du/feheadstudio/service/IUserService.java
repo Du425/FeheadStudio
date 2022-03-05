@@ -1,6 +1,6 @@
-package com.du.FeheadStudio.service;
+package com.du.feheadstudio.service;
 
-import com.du.FeheadStudio.entity.User;
+import com.du.feheadstudio.entity.User;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**

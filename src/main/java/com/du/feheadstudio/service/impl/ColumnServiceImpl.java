@@ -1,8 +1,8 @@
-package com.du.FeheadStudio.service.impl;
+package com.du.feheadstudio.service.impl;
 
-import com.du.FeheadStudio.entity.Column;
-import com.du.FeheadStudio.mapper.ColumnMapper;
-import com.du.FeheadStudio.service.IColumnService;
+import com.du.feheadstudio.entity.Column;
+import com.du.feheadstudio.mapper.ColumnMapper;
+import com.du.feheadstudio.service.IColumnService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
