@@ -1,4 +1,4 @@
-package com.du.FeheadStudio.entity;
+package com.du.feheadstudio.entity;
 
 import java.io.Serializable;
 

@@ -1,4 +1,4 @@
-package com.du.FeheadStudio.entity;
+package com.du.feheadstudio.entity;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

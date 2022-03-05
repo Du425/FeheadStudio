@@ -1,6 +1,6 @@
-package com.du.FeheadStudio.mapper;
+package com.du.feheadstudio.mapper;
 
-import com.du.FeheadStudio.entity.User;
+import com.du.feheadstudio.entity.User;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
