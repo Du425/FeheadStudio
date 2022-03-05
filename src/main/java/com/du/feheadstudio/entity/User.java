@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Date;
 
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -46,5 +47,7 @@ public class User implements Serializable {
     @ApiModelProperty("数字代表角色")
     private Integer role;
 
+    @ApiModelProperty("是否被删除")
+    private Integer deleted;
 
 }

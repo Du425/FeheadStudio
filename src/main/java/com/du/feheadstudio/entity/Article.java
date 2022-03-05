@@ -43,7 +43,7 @@ public class Article implements Serializable {
     private Integer publishMethod;
 
     @ApiModelProperty("0已发布 1未发布")
-    private Integer published;
+    private Integer alreadyPublished;
 
     private LocalDateTime publishTime;
 

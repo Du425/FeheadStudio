@@ -24,7 +24,7 @@ public class Column implements Serializable {
 
     private String columnName;
 
-    private String columnCover;
+    private String columnCoverId;
 
     private Integer totalArticleNum;
 
