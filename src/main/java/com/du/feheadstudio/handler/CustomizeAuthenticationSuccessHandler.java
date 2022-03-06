@@ -1,12 +1,8 @@
 package com.du.feheadstudio.handler;
 
 import com.alibaba.fastjson.JSON;
-import com.du.feheadstudio.controller.UserController;
 import com.du.feheadstudio.response.CommonResult;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 
@@ -22,9 +18,6 @@ import java.io.IOException;
  */
 @Component
 public class CustomizeAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
-
-    @Autowired
-    UserController userController;
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) throws IOException, ServletException {

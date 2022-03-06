@@ -1,10 +1,7 @@
-package com.du.feheadstudio.controller;
+package com.du.FeheadStudio.controller;
 
 
-import com.du.feheadstudio.response.CommonResult;
-import io.swagger.annotations.Api;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.stereotype.Controller;
 
@@ -14,15 +11,11 @@ import org.springframework.stereotype.Controller;
  * </p>
  *
  * @author Du425
- * @since 2022-03-04
+ * @since 2022-03-06
  */
-@Api(tags = "用户管理")
-@RestController
+@Controller
 @RequestMapping("/user")
 public class UserController {
-
-//    @PostMapping("/register")
-//    public CommonResult register(@Validated @RequestBody )
 
 }
 

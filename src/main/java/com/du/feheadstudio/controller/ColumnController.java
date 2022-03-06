@@ -1,4 +1,4 @@
-package com.du.feheadstudio.controller;
+package com.du.FeheadStudio.controller;
 
 
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Controller;
  * </p>
  *
  * @author Du425
- * @since 2022-03-04
+ * @since 2022-03-06
  */
 @Controller
 @RequestMapping("/column")
