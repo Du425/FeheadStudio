@@ -21,7 +21,7 @@ import java.io.IOException;
  * 什么情况下认证失败，是不是与exception重复了
  */
 @Component
-public class CustomizeAuthenticationFailureHandler implements AuthenticationFailureHandler {
+public class CustomizeAuthenticationFailureHandler extends Throwable implements AuthenticationFailureHandler {
 
     @Override
     public void onAuthenticationFailure(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException e) throws IOException, ServletException {
