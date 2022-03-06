@@ -1,8 +1,8 @@
 package com.du.feheadstudio.handler;
 
 import com.alibaba.fastjson.JSON;
-import com.du.dblog.response.CommonResult;
-import com.du.dblog.response.ResultType;
+import com.du.feheadstudio.response.CommonResult;
+import com.du.feheadstudio.response.ResultType;
 import org.springframework.security.authentication.*;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
