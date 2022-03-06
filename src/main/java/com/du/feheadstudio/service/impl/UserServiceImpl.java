@@ -1,9 +1,9 @@
 package com.du.feheadstudio.service.impl;
 
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.du.feheadstudio.entity.User;
 import com.du.feheadstudio.mapper.UserMapper;
-import com.du.FeheadStudio.service.IUserService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.du.feheadstudio.service.IUserService;
 import org.springframework.stereotype.Service;
 
 /**

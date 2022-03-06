@@ -6,7 +6,6 @@ import lombok.Data;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 /**
  * <p>
@@ -17,26 +16,41 @@ import java.util.Date;
  * @since 2022-03-04
  */
 @Data
-@ApiModel(value = "Article对象", description = "")
+@ApiModel(value = "Article对象", description = "对应文章")
 public class Article implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    /**
+     * 文章id
+     */
 
     private String articleId;
-
+    /**
+     * 用户id
+     */
     private String userId;
-
+    /**
+     * 文章标题
+     */
     private String title;
-
+    /**
+     * 正文
+     */
     private String content;
 
     @ApiModelProperty("图片url")
     private String coverImgId;
-
+    /**
+     * 摘要
+     */
     private String abstracts;
-
+    /**
+     * 标签
+     */
     private String label;
-
+    /**
+     * 专栏id
+     */
     private String columnId;
 
     @ApiModelProperty("0公开 1隐私")
