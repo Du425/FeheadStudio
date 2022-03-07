@@ -1,17 +1,17 @@
 package com.du.feheadstudio.entity;
 
-import java.io.Serializable;
-import java.time.LocalDateTime;
-import java.util.Date;
-
-import io.swagger.annotations.Api;
+import com.baomidou.mybatisplus.annotation.TableId;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import java.io.Serializable;
+import java.time.LocalDateTime;
+import java.util.Date;
+
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author Du425
@@ -22,7 +22,7 @@ import lombok.Data;
 public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
+    @TableId()
     private String userId;
 
     private String nickName;

@@ -1,14 +1,15 @@
 package com.du.feheadstudio.entity;
 
-import java.io.Serializable;
-
+import com.baomidou.mybatisplus.annotation.TableId;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import java.io.Serializable;
+
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author Du425
@@ -19,8 +20,9 @@ import lombok.Data;
 public class Column implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
+    @TableId
     private String columnId;
+
 
     private String columnName;
 

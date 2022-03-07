@@ -1,5 +1,7 @@
 package com.du.feheadstudio.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -9,7 +11,7 @@ import java.time.LocalDateTime;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author Du425
@@ -23,7 +25,7 @@ public class Article implements Serializable {
     /**
      * 文章id
      */
-
+    @TableId(type = IdType.AUTO)
     private String articleId;
     /**
      * 用户id

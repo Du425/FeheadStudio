@@ -44,10 +44,12 @@ public enum ResultType implements ErrorType{
         this.message = message;
     }
 
+    @Override
     public long getCode() {
         return code;
     }
 
+    @Override
     public String getMessage() {
         return message;
     }

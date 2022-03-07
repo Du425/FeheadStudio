@@ -1,20 +1,28 @@
 package com.du.feheadstudio.controller;
 
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.du.feheadstudio.entity.Article;
+import com.du.feheadstudio.response.CommonResult;
+import com.du.feheadstudio.service.IArticleService;
+import org.springframework.web.bind.annotation.*;
 
 /**
- * <p>
- *  前端控制器
- * </p>
- *
  * @author Du425
  * @since 2022-03-04
  */
 @RestController
-@RequestMapping("/article")
+@RequestMapping("/api/v1/user")
 public class ArticleController {
+    private IArticleService articleService;
 
+    public ArticleController(IArticleService articleService) {
+        this.articleService = articleService;
+    }
+
+    @PostMapping("/publish_article/{articleId}")
+    public CommonResult publishArticle(@PathVariable String articleId, @RequestBody Article article) {
+
+        return null;
+    }
 }
 
