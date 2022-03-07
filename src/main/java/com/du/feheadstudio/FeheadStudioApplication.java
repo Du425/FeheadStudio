@@ -6,7 +6,6 @@ import org.springframework.boot.web.servlet.ServletComponentScan;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @SpringBootApplication
-@ServletComponentScan
 @EnableSwagger2
 public class FeheadStudioApplication {
 

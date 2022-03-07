@@ -1,4 +1,4 @@
-package com.du.feheadstudio.controller;
+package com.du.FeheadStudio.controller;
 
 
 import com.du.feheadstudio.entity.Article;
@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 /**
  * @author Du425
- * @since 2022-03-04
+ * @since 2022-03-06
  */
 @RestController
 @RequestMapping("/api/v1/user")
