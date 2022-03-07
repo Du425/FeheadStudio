@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * 
+ * 搜索用的各字段
  * @Author DU425
  * @Date 2022/3/5 14:49
  * @Version 1.0
@@ -17,6 +17,7 @@ import lombok.NoArgsConstructor;
 public class BriefArticle {
     @TableId(type = IdType.ASSIGN_ID)
     private String articleId;
+    private String userId;
 
     private Integer year;
 

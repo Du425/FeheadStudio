@@ -1,13 +1,14 @@
 package com.du.feheadstudio.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * <p>
@@ -20,7 +21,7 @@ import java.time.LocalDateTime;
 @Data
 @ApiModel(value = "Article对象", description = "对应文章")
 public class Article implements Serializable {
-
+    @TableField(exist = false)
     private static final long serialVersionUID = 1L;
     /**
      * 文章id
@@ -49,7 +50,7 @@ public class Article implements Serializable {
     /**
      * 标签
      */
-    private String label;
+    private List<String> label;
     /**
      * 专栏id
      */
@@ -60,8 +61,10 @@ public class Article implements Serializable {
 
     @ApiModelProperty("0已发布 1未发布")
     private Integer alreadyPublished;
-
-    private LocalDateTime publishTime;
+    /**
+     * LocalDateTime
+     */
+    private Long publishTime;
 
     private Integer viewNum;
 

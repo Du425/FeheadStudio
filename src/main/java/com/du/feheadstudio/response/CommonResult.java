@@ -1,11 +1,13 @@
 package com.du.feheadstudio.response;
 
+import lombok.Builder;
+
 /**
  * @Author DU425
  * @Date 2022/1/13 9:37
  * @Version 1.0
  */
-
+@Builder
 public class CommonResult {
     private long code;
     private String message;
