@@ -5,10 +5,12 @@ package com.du.feheadstudio.response;
  * @Date 2022/1/13 9:37
  * @Version 1.0
  */
+
 public class CommonResult {
     private long code;
     private String message;
     private Object data;
+    private String status;
 
     public CommonResult() {
     }
