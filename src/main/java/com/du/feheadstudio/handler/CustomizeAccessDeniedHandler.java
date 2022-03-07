@@ -5,6 +5,7 @@ import com.du.feheadstudio.response.CommonResult;
 import com.du.feheadstudio.response.ResultType;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.access.AccessDeniedHandler;
+import org.springframework.stereotype.Component;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -17,6 +18,7 @@ import java.io.IOException;
  * @Version 1.0
  * @Description 权限拒绝处理逻辑 异常处理器，只负责其他请求抛出的异常
  */
+@Component
 public class CustomizeAccessDeniedHandler implements AccessDeniedHandler {
     @Override
     public void handle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AccessDeniedException e) throws IOException, ServletException {
