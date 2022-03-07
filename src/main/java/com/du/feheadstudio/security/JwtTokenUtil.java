@@ -6,18 +6,14 @@ import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.InvalidKeyException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
-
-import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
-import java.util.Base64;
+
 import java.util.Date;
-import java.util.HashMap;
 
 /**
  * @Author DU425
@@ -29,14 +25,14 @@ import java.util.HashMap;
 public class JwtTokenUtil {
 
     @Value("${jwt.secret}")
-    private static String secret;
+    private String secret;
 
     @Value("${jwt.expire}")
-    private static long expire;
+    private long expire;
 
-    private static final String ISS = "Du425";
+    private final String ISS = "Du425";
 
-    @Autowired
+    //@Autowired
     private MyUserDetails myUserDetails;
 
 //    @PostConstruct
@@ -44,7 +40,9 @@ public class JwtTokenUtil {
 //        secret = Base64.getEncoder().encodeToString(secret.getBytes());
 //    }
 
-    public String generateToken(String username){
+
+
+    public  String generateToken(String username){
         String token = null;
         Claims claims = Jwts.claims().setSubject(username);
         try {
@@ -62,7 +60,7 @@ public class JwtTokenUtil {
         return token;
     }
 
-    public static String getUsername(String token){
+    public String getUsername(String token){
         return Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody().getSubject();
     }
 
@@ -71,7 +69,7 @@ public class JwtTokenUtil {
         return new UsernamePasswordAuthenticationToken(userDetails," ", userDetails.getAuthorities());
     }
 
-    public static boolean isExpiration(String token){
+    public boolean isExpiration(String token){
         return getTokenBody(token).getExpiration().before(new Date());
     }
 
@@ -92,7 +90,7 @@ public class JwtTokenUtil {
         }
     }
 
-    private static Claims getTokenBody(String token){
+    private Claims getTokenBody(String token){
         return Jwts.parser()
                 .setSigningKey(secret)
                 .parseClaimsJws(token)
