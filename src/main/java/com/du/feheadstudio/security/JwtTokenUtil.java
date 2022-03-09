@@ -32,15 +32,7 @@ public class JwtTokenUtil {
 
     private final String ISS = "Du425";
 
-    //@Autowired
     private MyUserDetails myUserDetails;
-
-//    @PostConstruct
-//    protected void init() {
-//        secret = Base64.getEncoder().encodeToString(secret.getBytes());
-//    }
-
-
 
     public  String generateToken(String username){
         String token = null;
