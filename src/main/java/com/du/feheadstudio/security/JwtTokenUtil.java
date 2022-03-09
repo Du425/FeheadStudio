@@ -34,15 +34,20 @@ public class JwtTokenUtil {
 
     private MyUserDetails myUserDetails;
 
-    public  String generateToken(String username){
+    /**
+     * todo 是不是应该按照userid生成token
+     * @param userId
+     * @return
+     */
+    public  String generateToken(String userId){
         String token = null;
-        Claims claims = Jwts.claims().setSubject(username);
+        Claims claims = Jwts.claims().setSubject(userId);
         try {
             token = Jwts.builder()
                     .signWith(SignatureAlgorithm.HS256, secret)
                     .setClaims(claims)
                     .setIssuer(ISS)
-                    .setSubject(username)
+                    .setSubject(userId)
                     .setIssuedAt(new Date())
                     .setExpiration(new Date(System.currentTimeMillis() + expire*1000))
                     .compact();

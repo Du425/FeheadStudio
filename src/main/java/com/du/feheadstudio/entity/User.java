@@ -1,5 +1,6 @@
 package com.du.feheadstudio.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -10,6 +11,10 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 import java.time.LocalDateTime;
 import java.util.Date;
 
@@ -26,7 +31,7 @@ import java.util.Date;
 public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @TableId()
+    @TableId(type = IdType.ASSIGN_ID)
     private Integer userId;
 
     private String nickname;

@@ -1,8 +1,9 @@
-package com.du.feheadstudio.security;
+package com.du.feheadstudio.config;
 
 import com.du.feheadstudio.handler.CustomizeAccessDeniedHandler;
 import com.du.feheadstudio.handler.CustomizeAuthenticationEntryPoint;
 import com.du.feheadstudio.handler.CustomizeLogoutSuccessHandler;
+import com.du.feheadstudio.security.JwtTokenFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

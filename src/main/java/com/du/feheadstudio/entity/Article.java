@@ -25,7 +25,7 @@ public class Article implements Serializable {
     /**
      * 文章id
      */
-    @TableId(type = IdType.AUTO)
+    @TableId(type = IdType.ASSIGN_ID)
     private String articleId;
     /**
      * 用户id

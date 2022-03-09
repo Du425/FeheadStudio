@@ -9,6 +9,8 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -25,9 +27,9 @@ public class JwtTokenFilter extends OncePerRequestFilter {
     @Autowired
     private JwtTokenUtil jwtTokenUtil;
 
-
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+
         String token = jwtTokenUtil.resolveToken(request);
         try {
             if (token != null && jwtTokenUtil.validateToken(token)){
@@ -37,6 +39,12 @@ public class JwtTokenFilter extends OncePerRequestFilter {
         } catch (CustomizeAuthenticationFailureHandler customizeAuthenticationFailureHandler) {
             customizeAuthenticationFailureHandler.printStackTrace();
         }
+
+        String token1 = request.getHeader("token");
+
+
+
         filterChain.doFilter(request,response);
     }
+
 }
