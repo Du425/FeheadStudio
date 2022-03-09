@@ -1,6 +1,6 @@
 package com.du.feheadstudio.security;
 
-import com.du.feheadstudio.entity.UserDto;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
  * @Description
  */
 @Service
+@RequiredArgsConstructor
 public class MyUserDetails implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
