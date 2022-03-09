@@ -1,25 +1,29 @@
 package com.du.feheadstudio.entity;
 
-import java.io.Serializable;
+import com.baomidou.mybatisplus.annotation.TableId;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import java.io.Serializable;
+
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author Du425
- * @since 2022-03-06
+ * @since 2022-03-04
  */
 @Data
 @ApiModel(value = "Column对象", description = "")
 public class Column implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    @TableId
+    private Integer columnId;
 
-    private String columnId;
+    private String userId;
 
     private String columnName;
 
@@ -27,7 +31,7 @@ public class Column implements Serializable {
 
     private Integer totalArticleNum;
 
-    private Integer top;
-
+    @ApiModelProperty("0true 1false，是否置顶")
+    public Integer top;
 
 }
