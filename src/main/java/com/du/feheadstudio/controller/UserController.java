@@ -1,21 +1,16 @@
 package com.du.feheadstudio.controller;
 
 
-import cn.hutool.db.Page;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.du.feheadstudio.entity.CurrentUser;
 import com.du.feheadstudio.entity.User;
-import com.du.feheadstudio.entity.UserDto;
+import com.du.feheadstudio.entity.UserInfo;
 import com.du.feheadstudio.mapper.UserMapper;
 import com.du.feheadstudio.response.CommonResult;
 import com.du.feheadstudio.service.IUserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Bean;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -73,14 +68,22 @@ public class UserController {
     }
 
     /**
-     * todo 如何从jwt中解析出user信息
-     * @param userId
+     * todo 从jwt中解析出user信息,用户信息返回有问题
+     * @param
      * @return
      */
-//    @GetMapping("/my_message")
-//    public CommonResult getMyMessage(@CurrentUser User user){
-//        log.info("userId={}, username={}", user.getUserId(),user.getNickname());
-//
+    @GetMapping("/my_message")
+    public CommonResult getMyMessage(@CurrentUser User user){
+        final User user1 = userService.getOne(new QueryWrapper<User>().eq("userId", user.getUserId()));
+        if (user1 == null){
+            return CommonResult.failed("获取失败");
+        }else {
+            return CommonResult.success("获取成功",user);
+        }
+    }
+
+//    @PostMapping("/my_editor")
+//    public CommonResult myEditor(){
 //
 //    }
 
