@@ -26,7 +26,7 @@ public class Article implements Serializable {
     /**
      * 文章id
      */
-    @TableId(type = IdType.AUTO)
+    @TableId(type = IdType.ASSIGN_ID)
     private String articleId;
     /**
      * 用户id
@@ -42,7 +42,7 @@ public class Article implements Serializable {
     private String content;
 
     @ApiModelProperty("图片url")
-    private String coverImgId;
+    private String coverImgId="localhost:8888/api/v1/image/0";
     /**
      * 摘要
      */
@@ -66,9 +66,10 @@ public class Article implements Serializable {
      */
     private Long publishTime;
 
-    private Integer viewNum;
+    private Integer viewNum=0;
 
     @ApiModelProperty("0true 1false，是否置顶")
-    public Integer top;
+    public Integer top=1;
+    private Integer sort;
 
 }

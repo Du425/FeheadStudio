@@ -17,10 +17,25 @@ public class CommonResult {
     public CommonResult() {
     }
 
+    public CommonResult(long code, String message, Object data, String status) {
+        this.code = code;
+        this.message = message;
+        this.data = data;
+        this.status = status;
+    }
+
     public CommonResult(long code, String message, Object data) {
         this.code = code;
         this.message = message;
         this.data = data;
+    }
+
+
+    public static CommonResult ok(){
+        return new CommonResult(ResultType.SUCCESS.getCode(),ResultType.SUCCESS.getMessage(),null,"ok");
+    }
+    public static CommonResult ok(Object data  ){
+        return new CommonResult(ResultType.SUCCESS.getCode(),ResultType.SUCCESS.getMessage(),data,"ok");
     }
     /**
      * 返回成功消息

@@ -1,4 +1,4 @@
-package com.du.FeheadStudio.controller;
+package com.du.feheadstudio.controller;
 
 
 import org.springframework.web.bind.annotation.RequestMapping;

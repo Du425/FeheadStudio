@@ -57,9 +57,18 @@ public interface IArticleService extends IService<Article> {
     Article getArticleById(String articleId);
 
     /**
-     * 搜索文章
+     * 搜索文章 未分页
      * @param info
      * @return
      */
     public List<SimpleArticle> searchArticleList(ArticleSearchInfo info);
+
+    /**
+     * 插队
+     * @param a
+     * @param b
+     * @param userId
+     * @return
+     */
+    public  Boolean exchange(int a, int b,String userId);
 }

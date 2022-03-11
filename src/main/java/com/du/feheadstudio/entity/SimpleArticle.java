@@ -29,6 +29,7 @@ public class SimpleArticle {
      * 是否置顶
      */
     private Integer top;
+    private Integer sort;
     /**
      * 文章封面
      */
@@ -41,4 +42,8 @@ public class SimpleArticle {
      * 文章摘要
      */
     private String abstracts;
+
+
+
+
 }

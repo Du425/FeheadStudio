@@ -6,6 +6,7 @@ import com.du.feheadstudio.service.impl.ImageServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.HashMap;
@@ -21,6 +22,7 @@ import java.util.Map;
 @Slf4j
 public class ImageController {
     ImageServiceImpl imageService;
+    private static String URL_PATH="localhost:8888/api/v1/image/";
 
     public ImageController(ImageServiceImpl imageService) {
         this.imageService = imageService;
@@ -36,10 +38,9 @@ public class ImageController {
         }
         imageService.saveImage(save);
         Map<String,Object> data=new HashMap<>(1);
-        data.put("imageId",save.getId());
+        data.put("imageId",URL_PATH+save.getId());
         return CommonResult.success(data);
     }
-
     @GetMapping("/{imageId}")
     public void getImage(HttpServletResponse response, @PathVariable String imageId) {
         response.setContentType("image/jpg");

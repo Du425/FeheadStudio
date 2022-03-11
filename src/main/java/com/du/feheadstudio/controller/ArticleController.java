@@ -32,7 +32,12 @@ public class ArticleController {
      */
     @PostMapping("/publish/{articleId}")
     public CommonResult publishArticle(@PathVariable String articleId, @RequestBody Article article) {
-        return null;
+        if ("0".equals(articleId)) {
+            articleService.saveArticle(article);
+        } else {
+            articleService.updateArticle(article);
+        }
+        return CommonResult.ok();
     }
 
     /**
@@ -43,7 +48,9 @@ public class ArticleController {
      */
     @GetMapping("/get/all/{userId}")
     public CommonResult getArticleList(@PathVariable String userId) {
-        return null;
+        List<SimpleArticle> list = articleService.getArticleListByUserId(userId);
+
+        return CommonResult.ok(list);
     }
 
     /**
@@ -54,7 +61,7 @@ public class ArticleController {
      */
     @GetMapping("/get/{articleId}")
     public CommonResult getArticle(@PathVariable String articleId) {
-        return null;
+        return CommonResult.ok(articleService.getArticleListByUserId(articleId));
     }
 
     /**
@@ -65,19 +72,27 @@ public class ArticleController {
      */
     @DeleteMapping("/delete/{articleId}")
     public CommonResult deleteArticle(@PathVariable String articleId) {
-        return null;
+        articleService.deleteArticle(articleId);
+        return CommonResult.ok();
     }
 
     @PostMapping("/search")
     public CommonResult searchArticle(@RequestBody ArticleSearchInfo info) {
         List<SimpleArticle> list = articleService.searchArticleList(info);
-       return CommonResult.builder()
-               .code(200)
-               .status("ok")
-               .message("")
-               .data(list)
-               .build();
+        return CommonResult.builder()
+                .code(200)
+                .status("ok")
+                .message("")
+                .data(list)
+                .build();
+    }
 
+    @PostMapping("exchange")
+    public CommonResult exchange(@RequestBody int oldSort,
+                                 @RequestBody int newSort,
+                                 @RequestBody String userId) {
+        articleService.exchange(oldSort, newSort, userId);
+        return CommonResult.ok();
     }
 
 }
