@@ -3,6 +3,7 @@ package com.du.feheadstudio;
 import com.du.feheadstudio.mapper.ArticleJumpLineMapper;
 import com.du.feheadstudio.mapper.BriefArticleMapper;
 import com.du.feheadstudio.mapper.SimpleArticleMapper;
+import com.du.feheadstudio.mapper.UserMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -16,6 +17,8 @@ class FeheadStudioApplicationTests {
     BriefArticleMapper mapper;
     @Autowired
     SimpleArticleMapper simpleArticleMapper;
+    @Autowired
+    UserMapper userMapper;
 
     //    @Test
 //    void contextLoads() {
@@ -39,7 +42,7 @@ class FeheadStudioApplicationTests {
 //        System.out.println(articleJumpLineMapper.selectOne(wrapper));
 //        System.out.println("-----------------");
         System.out.println("-----------------");
-        System.out.println(simpleArticleMapper.selectById("1"));
+        System.out.println(userMapper);
     }
 
 }
