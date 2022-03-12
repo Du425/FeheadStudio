@@ -4,18 +4,18 @@ package com.du.feheadstudio.controller;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.du.feheadstudio.entity.CurrentUser;
+import com.du.feheadstudio.entity.SimpleUser;
 import com.du.feheadstudio.entity.User;
-import com.du.feheadstudio.entity.UserInfo;
 import com.du.feheadstudio.mapper.UserMapper;
 import com.du.feheadstudio.response.CommonResult;
+import com.du.feheadstudio.security.JwtTokenUtil;
 import com.du.feheadstudio.service.IUserService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
-import org.springframework.stereotype.Controller;
 
 import javax.validation.constraints.NotBlank;
 
@@ -33,6 +33,9 @@ import javax.validation.constraints.NotBlank;
 public class UserController {
 
     @Autowired
+    private JwtTokenUtil jwtTokenUtil;
+
+    @Autowired
     private IUserService userService;
 
     @Autowired
@@ -40,6 +43,7 @@ public class UserController {
 
     @Autowired
     private UserMapper userMapper;
+
 
     @PostMapping("/register")
     public CommonResult register(@RequestParam("nickname")@NotBlank String nickname,
@@ -63,6 +67,26 @@ public class UserController {
         return CommonResult.failed("注册失败");
 
     }
+
+    @PostMapping("/login")
+    public CommonResult login(@RequestBody User user){
+        QueryWrapper<User> wrapper = new QueryWrapper<>();
+        if (user.getTelephone() != null) {
+            wrapper.eq("telephone", user.getTelephone());
+        } else if (user.getEmail() != null) {
+            wrapper.eq("email", user.getEmail());
+        }
+
+        User loginUser = userMapper.selectOne(wrapper);
+        if (loginUser.getPassword().equals(passwordEncoder.encode(user.getPassword()))){
+            log.info("登陆成功");
+            String token = jwtTokenUtil.generateToken(loginUser.getUserId());
+            return CommonResult.success("登陆成功", token);
+        } else {
+            return CommonResult.failed("登陆失败");
+        }
+    }
+
 
     /**
      * todo 从jwt中解析出user信息,用户信息返回有问题

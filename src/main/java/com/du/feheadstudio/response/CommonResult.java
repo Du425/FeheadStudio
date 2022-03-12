@@ -1,11 +1,13 @@
 package com.du.feheadstudio.response;
 
+import lombok.Builder;
+
 /**
  * @Author DU425
  * @Date 2022/1/13 9:37
  * @Version 1.0
  */
-
+@Builder
 public class CommonResult {
     private long code;
     private String message;
@@ -15,10 +17,25 @@ public class CommonResult {
     public CommonResult() {
     }
 
+    public CommonResult(long code, String message, Object data, String status) {
+        this.code = code;
+        this.message = message;
+        this.data = data;
+        this.status = status;
+    }
+
     public CommonResult(long code, String message, Object data) {
         this.code = code;
         this.message = message;
         this.data = data;
+    }
+
+
+    public static CommonResult ok(){
+        return new CommonResult(ResultType.SUCCESS.getCode(),ResultType.SUCCESS.getMessage(),null,"ok");
+    }
+    public static CommonResult ok(Object data  ){
+        return new CommonResult(ResultType.SUCCESS.getCode(),ResultType.SUCCESS.getMessage(),data,"ok");
     }
     /**
      * 返回成功消息
@@ -131,6 +148,7 @@ public class CommonResult {
                 "code=" + code +
                 ", message='" + message + '\'' +
                 ", data=" + data +
+                ", status='" + status + '\'' +
                 '}';
     }
 }

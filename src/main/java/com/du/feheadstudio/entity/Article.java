@@ -1,13 +1,14 @@
 package com.du.feheadstudio.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * <p>
@@ -20,7 +21,7 @@ import java.time.LocalDateTime;
 @Data
 @ApiModel(value = "Article对象", description = "对应文章")
 public class Article implements Serializable {
-
+    @TableField(exist = false)
     private static final long serialVersionUID = 1L;
     /**
      * 文章id
@@ -41,7 +42,7 @@ public class Article implements Serializable {
     private String content;
 
     @ApiModelProperty("图片url")
-    private String coverImgId;
+    private String coverImgId="http://192.168.52.1:8888/api/v1/image/onload/0";
     /**
      * 摘要
      */
@@ -49,7 +50,7 @@ public class Article implements Serializable {
     /**
      * 标签
      */
-    private String label;
+    private List<String> label;
     /**
      * 专栏id
      */
@@ -60,12 +61,16 @@ public class Article implements Serializable {
 
     @ApiModelProperty("0已发布 1未发布")
     private Integer alreadyPublished;
+    /**
+     * LocalDateTime
+     */
+    private Long publishTime;
 
-    private LocalDateTime publishTime;
-
-    private Integer viewNum;
+    private Integer viewNum=0;
 
     @ApiModelProperty("0true 1false，是否置顶")
-    public Integer top;
+    public Integer top=1;
+    private Integer sort;
+
 
 }

@@ -2,7 +2,8 @@ package com.du.feheadstudio.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.du.feheadstudio.entity.Article;
-import com.du.feheadstudio.entity.BriefArticle;
+import com.du.feheadstudio.entity.SimpleArticle;
+import com.du.feheadstudio.pojo.ArticleSearchInfo;
 
 import java.util.List;
 
@@ -45,7 +46,7 @@ public interface IArticleService extends IService<Article> {
      * @param userId
      * @return
      */
-    List<BriefArticle> getArticleListByUserId(String userId);
+    List<SimpleArticle> getArticleListByUserId(String userId);
 
     /**
      * 返回id对应文章
@@ -54,4 +55,20 @@ public interface IArticleService extends IService<Article> {
      * @return
      */
     Article getArticleById(String articleId);
+
+    /**
+     * 搜索文章 未分页
+     * @param info
+     * @return
+     */
+    public List<SimpleArticle> searchArticleList(ArticleSearchInfo info);
+
+    /**
+     * 插队
+     * @param a
+     * @param b
+     * @param userId
+     * @return
+     */
+    public  Boolean exchange(int a, int b,String userId);
 }

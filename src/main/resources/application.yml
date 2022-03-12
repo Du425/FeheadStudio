@@ -3,6 +3,6 @@ spring:
     active: dev
 
 server:
-  port: 7399
+  port: 8888
 
 

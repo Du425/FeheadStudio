@@ -1,3 +1,4 @@
+
 package com.du.feheadstudio.handler;
 
 import com.alibaba.fastjson.JSON;
@@ -14,11 +15,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+
 /**
  * @Author DU425
  * @Date 2022/1/16 14:50
  * @Version 1.0
  */
+
 @Component
 public class CustomizeAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
 
@@ -36,3 +39,4 @@ public class CustomizeAuthenticationSuccessHandler implements AuthenticationSucc
         httpServletResponse.getWriter().write(JSON.toJSONString(result));
     }
 }
+
