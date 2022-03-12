@@ -13,12 +13,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.constraints.NotBlank;
 
@@ -30,7 +27,7 @@ import javax.validation.constraints.NotBlank;
  * @author Du425
  * @since 2022-03-06
  */
-@Controller
+@RestController
 @RequestMapping("api/v1/user")
 @Slf4j
 public class UserController {
@@ -74,7 +71,7 @@ public class UserController {
      */
     @GetMapping("/my_message")
     public CommonResult getMyMessage(@CurrentUser User user){
-        final User user1 = userService.getOne(new QueryWrapper<User>().eq("userId", user.getUserId()));
+        final User user1 = userService.getOne(new QueryWrapper<User>().eq("user_id", user.getUserId()));
         if (user1 == null){
             return CommonResult.failed("获取失败");
         }else {
