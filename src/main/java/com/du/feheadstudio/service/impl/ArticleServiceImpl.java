@@ -5,11 +5,8 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.du.feheadstudio.entity.Article;
 import com.du.feheadstudio.entity.ArticleJumpLine;
 import com.du.feheadstudio.entity.BriefArticle;
-import com.du.feheadstudio.mapper.ArticleJumpLineMapper;
-import com.du.feheadstudio.mapper.ArticleMapper;
-import com.du.feheadstudio.mapper.BriefArticleMapper;
 import com.du.feheadstudio.entity.SimpleArticle;
-import com.du.feheadstudio.mapper.SimpleArticleMapper;
+import com.du.feheadstudio.mapper.*;
 import com.du.feheadstudio.pojo.ArticleSearchInfo;
 import com.du.feheadstudio.service.IArticleService;
 import org.springframework.stereotype.Service;
@@ -34,13 +31,15 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     private final BriefArticleMapper briefArticleMapper;
     private final SimpleArticleMapper simpleArticleMapper;
     private final ArticleJumpLineMapper articleJumpLineMapper;
+    private final UserMapper userMapper;
 
     public ArticleServiceImpl(ArticleMapper articleMapper, BriefArticleMapper briefArticleMapper,
-                              SimpleArticleMapper simpleArticleMapper, ArticleJumpLineMapper articleJumpLineMapper) {
+                              SimpleArticleMapper simpleArticleMapper, ArticleJumpLineMapper articleJumpLineMapper, UserMapper userMapper) {
         this.articleMapper = articleMapper;
         this.briefArticleMapper = briefArticleMapper;
         this.simpleArticleMapper = simpleArticleMapper;
         this.articleJumpLineMapper = articleJumpLineMapper;
+        this.userMapper = userMapper;
     }
 
     /**
@@ -86,11 +85,14 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
 
     @Override
     public Boolean deleteArticle(String articleId) {
+        //用户名
+        String userId = articleMapper.getUserId(articleId);
         int delete1 = briefArticleMapper.deleteById(articleId);
         int delete2 = articleMapper.deleteById(articleId);
+
         //用户文章数减1
-
-
+        Integer num = userMapper.getArticleMum(userId);
+        userMapper.updateArticleNum(userId, --num);
         return delete1 > 0 && delete2 > 0;
     }
 
@@ -98,10 +100,19 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     public List<SimpleArticle> getArticleListByUserId(String userId) {
         QueryWrapper<SimpleArticle> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("user_id", userId);
-        return simpleArticleMapper.selectList(queryWrapper);
+        List<SimpleArticle> selectList = simpleArticleMapper.selectList(queryWrapper);
+        if (selectList!=null){
+            selectList.forEach(simpleArticle -> userMapper.getUserNickName(simpleArticle.getUserId()));
+        }else {
+            selectList=new ArrayList<>(1);
+        }
+        return selectList;
     }
+
     @Override
     public Article getArticleById(String articleId) {
+        //文章浏览量加一
+        articleMapper.addOneViewNum(articleId);
         return articleMapper.selectById(articleId);
     }
 
@@ -110,18 +121,25 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         QueryWrapper<SimpleArticle> queryWrapper = new QueryWrapper<>();
         if (info.getYear() != null) {
             queryWrapper.eq("year", info.getYear());
-        } else if (info.getMonth() != null) {
+        }
+        if (info.getMonth() != null) {
             queryWrapper.eq("month", info.getMonth());
-        } else if (info.getColumnName() != null) {
+        }
+        if (info.getColumnName() != null) {
             queryWrapper.eq("column_name", info.getColumnName());
-        } else if (info.getTitleAbstruct() != null) {
+        }
+        if (info.getTitleAbstruct() != null) {
             queryWrapper.like("title", info.getTitleAbstruct());
-        } else {
-            return new ArrayList<>();
         }
         queryWrapper.eq("user_id", info.getUserId());
+        List<SimpleArticle> selectList = simpleArticleMapper.selectList(queryWrapper);
+        if (selectList != null) {
+            selectList.forEach(simpleArticle -> userMapper.getUserNickName(simpleArticle.getUserId()));
+        } else {
+            selectList = new ArrayList<>(1);
+        }
 
-        return simpleArticleMapper.selectList(queryWrapper);
+        return selectList;
     }
 
     @Override

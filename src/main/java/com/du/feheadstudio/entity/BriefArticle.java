@@ -18,11 +18,8 @@ public class BriefArticle {
     @TableId(type = IdType.ASSIGN_ID)
     private String articleId;
     private String userId;
-
     private Integer year;
-
     private Integer month;
-
     private String columnId;
 
     private String titleAbstract;

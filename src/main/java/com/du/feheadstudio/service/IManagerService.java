@@ -24,32 +24,40 @@ public interface IManagerService {
          */
         DELETED;
     }
-    /** 获取用户列表
+
+    /**
+     * 获取用户列表
+     *
      * @param type 类型
      * @param page
      * @param sum
      * @return List<SimpleUser>
      */
-   List<SimpleUser> getUserForList(UserType type,Integer page,Integer sum);
+    List<SimpleUser> getUserForList(UserType type, Integer page, Integer sum);
 
     /**
      * 通过条件返回满足条件的用户
+     *
      * @param info
+     * @param page
+     * @param sum
      * @return
      */
-   List<SimpleUser> searchUserForList(UserSearchInfo info, Integer page, Integer sum);
+    List<SimpleUser> searchUserForList(UserSearchInfo info, Integer page, Integer sum);
 
     /**
      * 删除正常成员
+     *
      * @param userId
      * @return
      */
-     Boolean deleteMember(String userId);
+    Boolean deleteMember(String userId);
 
     /**
      * 恢复已删除成员
+     *
      * @param userId
      * @return
      */
-    Boolean recoveryMember( String userId);
+    Boolean recoveryMember(String userId);
 }

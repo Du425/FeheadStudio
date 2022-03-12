@@ -9,6 +9,7 @@ import com.du.feheadstudio.mapper.UserMapper;
 import com.du.feheadstudio.pojo.UserSearchInfo;
 import com.du.feheadstudio.service.IManagerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +19,7 @@ import java.util.List;
  * @version 1.0
  * @date 2022/3/9 16:47
  */
+@Service
 public class ManagerServiceImpl implements IManagerService {
     private final UserMapper userMapper;
     private final SimpleUserMapper simpleUserMapper;

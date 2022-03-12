@@ -1,5 +1,6 @@
 package com.du.feheadstudio.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -22,7 +23,7 @@ import java.util.Date;
 public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @TableId
+    @TableId(type = IdType.ASSIGN_ID)
     private String userId;
 
     private String nickName;
@@ -49,5 +50,6 @@ public class User implements Serializable {
 
     @ApiModelProperty("是否被删除")
     private Integer deleted;
+    private Integer articleNum;
 
 }

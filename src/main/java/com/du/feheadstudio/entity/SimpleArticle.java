@@ -1,5 +1,7 @@
 package com.du.feheadstudio.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
@@ -13,10 +15,11 @@ import lombok.Data;
 @Data
 @TableName("article")
 public class SimpleArticle {
+    @TableId
     private String articleId;
+    private String userId;
     private String title;
-
-    private String alreadyPublish;
+    private String alreadyPublished;
     /**
      * 文章浏览量
      */
@@ -37,13 +40,12 @@ public class SimpleArticle {
     /**
      * 作者昵称
      */
+    @TableField(exist = false)
     private String nickname;
     /**
      * 文章摘要
      */
     private String abstracts;
-
-
 
 
 }
