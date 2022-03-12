@@ -14,7 +14,7 @@ import java.util.List;
  * @Version 1.0
  * @Description
  */
-@Configuration
+//@Configuration
 public class WebConfig implements WebMvcConfigurer {
 
     @Resource

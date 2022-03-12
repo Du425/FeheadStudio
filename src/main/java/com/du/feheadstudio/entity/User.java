@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.models.auth.In;
+import io.swagger.v3.oas.models.security.SecurityScheme;
 import lombok.Data;
 
 import javax.validation.constraints.Email;
@@ -62,5 +63,7 @@ public class User implements Serializable {
 
     @ApiModelProperty("是否被删除")
     private Integer deleted;
+
+    private Integer articleNum;
 
 }

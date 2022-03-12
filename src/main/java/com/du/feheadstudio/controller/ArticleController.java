@@ -4,6 +4,8 @@ package com.du.feheadstudio.controller;
 import com.du.feheadstudio.entity.Article;
 import com.du.feheadstudio.response.CommonResult;
 import com.du.feheadstudio.service.IArticleService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -13,6 +15,8 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/v1/user")
 public class ArticleController {
+
+    @Autowired
     private IArticleService articleService;
 
     //todo 这部分什么作用
