@@ -1,5 +1,6 @@
 package com.du.feheadstudio.controller;
 
+import com.du.feheadstudio.pojo.Page;
 import com.du.feheadstudio.pojo.UserSearchInfo;
 import com.du.feheadstudio.response.CommonResult;
 import com.du.feheadstudio.service.IManagerService;
@@ -22,26 +23,21 @@ public class ManagerController {
     }
 
     @PostMapping("/common")
-    public CommonResult common(@RequestBody Integer pages,
-                               @RequestBody Integer onePageSum) {
+    public CommonResult common(@RequestBody Page page) {
+
         return CommonResult.ok(managerService.getUserForList(IManagerService.UserType.COMMON,
-                pages,
-                onePageSum));
+                page.getPages(), page.getOnePageSum()));
     }
 
     @PostMapping("/deleted")
-    public CommonResult deleted(@RequestBody Integer pages,
-                                @RequestBody Integer onePageSum) {
+    public CommonResult deleted(@RequestBody Page page) {
         return CommonResult.ok(managerService.getUserForList(IManagerService.UserType.DELETED,
-                pages,
-                onePageSum));
+                page.getPages(), page.getOnePageSum()));
     }
 
     @PostMapping("/search")
-    public CommonResult search(@RequestBody UserSearchInfo info,
-                               @RequestBody Integer pages,
-                               @RequestBody Integer onePageSum) {
-        return CommonResult.ok(managerService.searchUserForList(info, pages, onePageSum));
+    public CommonResult search(@RequestBody UserSearchInfo info) {
+        return CommonResult.ok(managerService.searchUserForList(info, info.getPages(), info.getOnePageSum()));
     }
 
     @PostMapping("/delete_member/{userId}")
