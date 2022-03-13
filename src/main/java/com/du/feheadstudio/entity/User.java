@@ -33,10 +33,11 @@ public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @TableId(type = IdType.ASSIGN_ID)
-    private Integer userId;
+    private String userId;
 
     private String nickname;
 
+    //todo 格式规范没有起作用
     @Size(min = 11, max = 11, message = "手机号只能为11位")
     @Pattern(regexp = "^[1][3,4,5,6,7,8,9][0-9]{9}$", message = "手机号格式有误")
     private String telephone;

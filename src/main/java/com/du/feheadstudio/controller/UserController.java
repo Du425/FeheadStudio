@@ -77,8 +77,9 @@ public class UserController {
             wrapper.eq("email", user.getEmail());
         }
 
+
         User loginUser = userMapper.selectOne(wrapper);
-        if (loginUser.getPassword().equals(passwordEncoder.encode(user.getPassword()))){
+        if (passwordEncoder.matches(user.getPassword(), loginUser.getPassword())){
             log.info("登陆成功");
             String token = jwtTokenUtil.generateToken(loginUser.getUserId());
             return CommonResult.success("登陆成功", token);
@@ -103,10 +104,15 @@ public class UserController {
         }
     }
 
-//    @PostMapping("/my_editor")
-//    public CommonResult myEditor(){
-//
-//    }
+    @PostMapping("/my_editor")
+    public CommonResult myEditor(@RequestBody User user){
+        QueryWrapper<User> wrapper = new QueryWrapper<User>(null);
+        if (userMapper.update(user,wrapper) == 1){
+            return CommonResult.success("修改成功");
+        }else {
+            return CommonResult.failed("修改失败");
+        }
+    }
 
 }
 

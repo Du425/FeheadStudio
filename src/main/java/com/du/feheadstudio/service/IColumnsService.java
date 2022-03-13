@@ -2,8 +2,7 @@ package com.du.feheadstudio.service;
 
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.du.feheadstudio.entity.Column;
-import org.springframework.stereotype.Service;
+import com.du.feheadstudio.entity.Columns;
 
 /**
  * <p>
@@ -14,6 +13,6 @@ import org.springframework.stereotype.Service;
  * @since 2022-03-06
  */
 
-public interface IColumnService extends IService<Column> {
+public interface IColumnsService extends IService<Columns> {
 
 }
