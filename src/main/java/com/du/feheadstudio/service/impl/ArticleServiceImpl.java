@@ -9,10 +9,14 @@ import com.du.feheadstudio.entity.SimpleArticle;
 import com.du.feheadstudio.mapper.*;
 import com.du.feheadstudio.pojo.ArticleSearchInfo;
 import com.du.feheadstudio.service.IArticleService;
+import org.springframework.data.redis.core.HashOperations;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -32,14 +36,17 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     private final SimpleArticleMapper simpleArticleMapper;
     private final ArticleJumpLineMapper articleJumpLineMapper;
     private final UserMapper userMapper;
+    private final RedisTemplate<String, Object> redisTemplate;
 
     public ArticleServiceImpl(ArticleMapper articleMapper, BriefArticleMapper briefArticleMapper,
-                              SimpleArticleMapper simpleArticleMapper, ArticleJumpLineMapper articleJumpLineMapper, UserMapper userMapper) {
+                              SimpleArticleMapper simpleArticleMapper, ArticleJumpLineMapper articleJumpLineMapper,
+                              UserMapper userMapper, RedisTemplate<String, Object> redisTemplate) {
         this.articleMapper = articleMapper;
         this.briefArticleMapper = briefArticleMapper;
         this.simpleArticleMapper = simpleArticleMapper;
         this.articleJumpLineMapper = articleJumpLineMapper;
         this.userMapper = userMapper;
+        this.redisTemplate = redisTemplate;
     }
 
     /**
@@ -101,16 +108,30 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         QueryWrapper<SimpleArticle> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("user_id", userId);
         List<SimpleArticle> selectList = simpleArticleMapper.selectList(queryWrapper);
-        if (selectList!=null){
+        if (selectList != null) {
             selectList.forEach(simpleArticle -> userMapper.getUserNickName(simpleArticle.getUserId()));
-        }else {
-            selectList=new ArrayList<>(1);
+        } else {
+            selectList = new ArrayList<>(1);
         }
         return selectList;
     }
 
     @Override
     public Article getArticleById(String articleId) {
+        //用户文章浏览量加一
+        String userId = articleMapper.getUserId(articleId);
+        SimpleDateFormat format = new SimpleDateFormat("yy-MM-dd");
+        HashOperations<String, Object, Object> forHash = redisTemplate.opsForHash();
+        String date = format.format(new Date());
+
+        //存在就加一
+        if (forHash.hasKey(userId, date)) {
+            Integer integer = (Integer) forHash.get(userId, date);
+            forHash.put(userId, date, ++integer);
+        } else {
+            forHash.put(userId, date, 1);
+        }
+
         //文章浏览量加一
         articleMapper.addOneViewNum(articleId);
         return articleMapper.selectById(articleId);
