@@ -172,7 +172,13 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         list.remove(a);
         list.add(b, simpleArticle);
         AtomicInteger size = new AtomicInteger();
-        list.forEach(l -> l.setSort(size.getAndIncrement()));
+        list.forEach(l -> {
+            l.setSort(size.getAndIncrement());
+            QueryWrapper<ArticleJumpLine> wrapper = new QueryWrapper<>();
+            wrapper.eq("user_id", l.getUserId());
+            articleJumpLineMapper.update(l, wrapper);
+        });
+
         return true;
     }
 }
