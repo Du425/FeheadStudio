@@ -8,6 +8,7 @@ import com.du.feheadstudio.entity.BriefArticle;
 import com.du.feheadstudio.entity.SimpleArticle;
 import com.du.feheadstudio.mapper.*;
 import com.du.feheadstudio.pojo.ArticleSearchInfo;
+import com.du.feheadstudio.pojo.TopArticleInfo;
 import com.du.feheadstudio.service.IArticleService;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -58,7 +59,8 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     @Override
     public Boolean saveArticle(Article article) {
         //设置sort
-        article.setSort(1);
+//        article.setSort(userMapper.getArticleMum(article.getUserId()));
+
         //插入文章
         int insert = articleMapper.insert(article);
         //插入简略信息
@@ -70,7 +72,13 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
                 article.getColumnId(),
                 article.getTitle()
         );
+        briefArticle.setUserId(article.getUserId());
+        briefArticle.setArticleId(article.getArticleId());
         int insertBrief = briefArticleMapper.insert(briefArticle);
+        //用户文章数加1
+        Integer num = userMapper.getArticleMum(article.getUserId());
+        userMapper.updateArticleNum(article.getUserId(), ++num);
+
         return insert > 0 && insertBrief > 0;
     }
 
@@ -91,12 +99,19 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     }
 
     @Override
+    public Boolean topArticle(TopArticleInfo info) {
+        if (info.getOldArticleId() != null) {
+            articleMapper.updateTop(info.getOldArticleId(), 1);
+        }
+        articleMapper.updateTop(info.getNewArticleId(), 0);
+        return true;
+    }
+    @Override
     public Boolean deleteArticle(String articleId) {
         //用户名
         String userId = articleMapper.getUserId(articleId);
         int delete1 = briefArticleMapper.deleteById(articleId);
         int delete2 = articleMapper.deleteById(articleId);
-
         //用户文章数减1
         Integer num = userMapper.getArticleMum(userId);
         userMapper.updateArticleNum(userId, --num);

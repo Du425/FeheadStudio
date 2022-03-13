@@ -3,12 +3,13 @@ package com.du.feheadstudio.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.du.feheadstudio.pojo.ArticleInfo;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
-import java.util.List;
 
 /**
  * <p>
@@ -19,8 +20,10 @@ import java.util.List;
  * @since 2022-03-04
  */
 @Data
+@NoArgsConstructor
 @ApiModel(value = "Article对象", description = "对应文章")
 public class Article implements Serializable {
+
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
     /**
@@ -42,7 +45,7 @@ public class Article implements Serializable {
     private String content;
 
     @ApiModelProperty("图片url")
-    private String coverImgId="localhost:8888/api/v1/image/onload/0";
+    private String coverImgId;
     /**
      * 摘要
      */
@@ -50,7 +53,7 @@ public class Article implements Serializable {
     /**
      * 标签
      */
-    private List<String> label;
+    private String label;
     /**
      * 专栏id
      */
@@ -66,11 +69,32 @@ public class Article implements Serializable {
      */
     private Long publishTime;
 
-    private Integer viewNum=0;
+    private Integer viewNum = 0;
 
     @ApiModelProperty("0true 1false，是否置顶")
-    public Integer top=1;
+    public Integer top = 1;
     private Integer sort;
 
+    public Article(ArticleInfo info) {
 
+        this.articleId = info.getArticleId();
+        this.userId=info.getUserId();
+        this.top = info.getTop();
+        this.sort = info.getSort();
+        this.viewNum = info.getViewNum();
+        this.publishTime = info.getPublishTime();
+        this.alreadyPublished = info.getAlreadyPublished();
+        this.publishMethod = info.getPublishMethod();
+        this.columnId = info.getColumnId();
+        this.coverImgId = info.getCoverImgId();
+        StringBuilder builder = new StringBuilder();
+        info.getLabel().forEach(label->{
+            builder.append(label);
+            builder.append(',');
+        });
+        this.label= builder.toString();
+        this.title = info.getTitle();
+        this.abstracts = info.getAbstracts();
+        this.content = info.getContent();
+    }
 }
