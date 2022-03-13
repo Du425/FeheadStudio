@@ -4,6 +4,7 @@ package com.du.feheadstudio.controller;
 import com.du.feheadstudio.entity.Article;
 import com.du.feheadstudio.entity.SimpleArticle;
 import com.du.feheadstudio.pojo.ArticleSearchInfo;
+import com.du.feheadstudio.pojo.ExchangeInfo;
 import com.du.feheadstudio.response.CommonResult;
 import com.du.feheadstudio.service.IArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -92,11 +93,9 @@ public class ArticleController {
                 .build();
     }
 
-    @PostMapping("exchange")
-    public CommonResult exchange(@RequestBody int oldSort,
-                                 @RequestBody int newSort,
-                                 @RequestBody String userId) {
-        articleService.exchange(oldSort, newSort, userId);
+    @PostMapping("/exchange")
+    public CommonResult exchange(@RequestBody ExchangeInfo info) {
+        articleService.exchange(info.getOldSort(), info.getNewSort(), info.getUserId());
         return CommonResult.ok();
     }
 
