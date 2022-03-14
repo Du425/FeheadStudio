@@ -24,7 +24,6 @@ public class ArticleController {
     @Autowired
     private IArticleService articleService;
 
-    //todo 这部分什么作用
     public ArticleController(IArticleService articleService) {
         this.articleService = articleService;
     }

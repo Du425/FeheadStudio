@@ -31,7 +31,7 @@ public class Columns implements Serializable {
     @NotBlank
     private String columnName;
 
-    private String columnCoverId;
+    private String columnCoverId = "http://192.168.58.1:8888/api/v1/image/onload/0";
 
     private Integer totalArticleNum;
 

@@ -30,20 +30,20 @@ public class ColumnController {
     IColumnsService columnService;
 
     @PostMapping("/add")
-    public CommonResult addColumn(@RequestBody Columns column){
-        if (columnMapper.insert(column) == 1){
+    public CommonResult addColumn(@RequestBody Columns column) {
+        if (columnMapper.insert(column) == 1) {
             return CommonResult.success("添加成功",column);
-        }else {
+        } else {
             return CommonResult.failed("添加失败，请重新操作");
         }
     }
 
     @GetMapping("/get/all/{id}")
-    public CommonResult getAll(@PathVariable("userId") String userId){
-        List<Columns> columnList = columnService.list(new QueryWrapper<Columns>().eq("user_id",userId));
-        if (columnList == null || columnList.size() < 1){
+    public CommonResult getAll(@PathVariable("id") String userId){
+        List<Columns> columnList = columnService.list(new QueryWrapper<Columns>().eq("user_id", userId));
+        if (columnList == null || columnList.size() < 1) {
             return CommonResult.failed("获取失败");
-        }else {
+        } else {
             for (Columns column1 : columnList) {
                 System.out.println(column1);
             }
@@ -51,11 +51,11 @@ public class ColumnController {
         }
     }
 
-    @DeleteMapping("/delete")
-    public CommonResult deleteColumn(Columns column){
-        if (columnMapper.deleteById(column) == 1){
+    @DeleteMapping("/delete/{userId}/{columnId}")
+    public CommonResult deleteColumn(@PathVariable String columnId, @PathVariable String userId){
+        if (columnMapper.deleteById(columnId) == 1){
             return CommonResult.success("删除成功");
-        }else {
+        } else {
             return CommonResult.failed("操作失败，请重新删除");
         }
     }
@@ -75,7 +75,7 @@ public class ColumnController {
 //    }
 
     @GetMapping("/search")
-    public CommonResult searchColumn(@RequestBody Columns column){
+    public CommonResult searchColumn(@RequestBody Columns column) {
         QueryWrapper<Columns> wrapper = new QueryWrapper<>();
         wrapper.eq("columnName",column.getColumnName());
         if (columnMapper.selectOne(wrapper) != null){

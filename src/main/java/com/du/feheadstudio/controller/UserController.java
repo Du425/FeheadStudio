@@ -18,6 +18,9 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.NotBlank;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * <p>
@@ -46,21 +49,18 @@ public class UserController {
 
 
     @PostMapping("/register")
-    public CommonResult register(@RequestParam("nickname")@NotBlank String nickname,
-                                 @Validated @RequestParam("email")@NotBlank String email,
-                                 @Validated @RequestParam("telephone")@NotBlank String telephone,
-                                 @Validated @RequestParam("password")@NotBlank String password) {
-        User oldUser = userService.getOne(new LambdaQueryWrapper<User>().eq(User::getTelephone, telephone));
+    public CommonResult register(@RequestBody User user) {
+        User oldUser = userService.getOne(new LambdaQueryWrapper<User>().eq(User::getTelephone, user.getTelephone()));
         if (oldUser != null){
             return CommonResult.failed("该号码已被注册，注册失败");
         }
-        final User user = new User(){{
-            setNickname(nickname);
-            setPassword(passwordEncoder.encode(password));
-            setEmail(email);
-            setTelephone(telephone);
+        final User user1 = new User(){{
+            setNickname(user.getNickname());
+            setPassword(passwordEncoder.encode(user.getPassword()));
+            setEmail(user.getEmail());
+            setTelephone(user.getTelephone());
         }};
-        boolean save = userService.save(user);
+        boolean save = userService.save(user1);
         if (save){
             return CommonResult.success("注册成功");
         }
@@ -69,7 +69,7 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public CommonResult login(@RequestBody User user){
+    public CommonResult login(@Validated @RequestBody User user){
         QueryWrapper<User> wrapper = new QueryWrapper<>();
         if (user.getTelephone() != null) {
             wrapper.eq("telephone", user.getTelephone());
@@ -81,8 +81,12 @@ public class UserController {
         User loginUser = userMapper.selectOne(wrapper);
         if (passwordEncoder.matches(user.getPassword(), loginUser.getPassword())){
             log.info("登陆成功");
-            String token = jwtTokenUtil.generateToken(loginUser.getUserId());
-            return CommonResult.success("登陆成功", token);
+            //todo 返回userId role token
+            Map<String, Object> map = new HashMap<>();
+            map.put("token",jwtTokenUtil.generateToken(loginUser.getUserId()));
+            map.put("userId", loginUser.getUserId());
+            map.put("role", loginUser.getRole());
+            return CommonResult.success("登陆成功", map);
         } else {
             return CommonResult.failed("登陆失败");
         }
