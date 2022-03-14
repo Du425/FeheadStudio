@@ -3,6 +3,7 @@ package com.du.feheadstudio.controller;
 
 import com.du.feheadstudio.entity.Article;
 import com.du.feheadstudio.entity.SimpleArticle;
+import com.du.feheadstudio.pojo.ArticleInfo;
 import com.du.feheadstudio.pojo.ArticleSearchInfo;
 import com.du.feheadstudio.pojo.ExchangeInfo;
 import com.du.feheadstudio.response.CommonResult;
@@ -32,11 +33,12 @@ public class ArticleController {
      * 更新文章
      *
      * @param articleId
-     * @param article
+     * @param info
      * @return
      */
     @PostMapping("/publish/{articleId}")
-    public CommonResult publishArticle(@PathVariable String articleId, @RequestBody Article article) {
+    public CommonResult publishArticle(@PathVariable String articleId, @RequestBody ArticleInfo info) {
+        Article article=new Article(info);
         if ("0".equals(articleId)) {
             articleService.saveArticle(article);
         } else {
@@ -54,7 +56,6 @@ public class ArticleController {
     @GetMapping("/get/all/{userId}")
     public CommonResult getArticleList(@PathVariable String userId) {
         List<SimpleArticle> list = articleService.getArticleListByUserId(userId);
-
         return CommonResult.ok(list);
     }
 
@@ -66,7 +67,7 @@ public class ArticleController {
      */
     @GetMapping("/get/{articleId}")
     public CommonResult getArticle(@PathVariable String articleId) {
-        return CommonResult.ok(articleService.getArticleListByUserId(articleId));
+        return CommonResult.ok(articleService.getArticleById(articleId));
     }
 
     /**

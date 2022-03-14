@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.du.feheadstudio.entity.Article;
 import com.du.feheadstudio.entity.SimpleArticle;
 import com.du.feheadstudio.pojo.ArticleSearchInfo;
+import com.du.feheadstudio.pojo.TopArticleInfo;
 
 import java.util.List;
 
@@ -31,6 +32,13 @@ public interface IArticleService extends IService<Article> {
      * @return
      */
     Boolean updateArticle(Article article);
+
+    /**
+     * 置顶文章
+     * @param info
+     * @return
+     */
+    Boolean topArticle(TopArticleInfo info);
 
     /**
      * 通过id删除存在的id

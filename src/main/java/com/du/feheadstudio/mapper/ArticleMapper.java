@@ -32,4 +32,14 @@ public interface ArticleMapper extends BaseMapper<Article> {
      */
     @Update("update article set view_num=view_num+1 where article_id=#{articleId}")
     Integer addOneViewNum(String articleId);
+
+    /**
+     * 修改置顶
+     *
+     * @param articleId
+     * @param top
+     * @return
+     */
+    @Update("update article set top= #{top} where article_id=#{articleId}")
+    Integer updateTop(String articleId,Integer top);
 }

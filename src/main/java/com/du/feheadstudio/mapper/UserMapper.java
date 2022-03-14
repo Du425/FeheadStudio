@@ -31,7 +31,7 @@ public interface UserMapper extends BaseMapper<User> {
      * @param userId
      * @return
      */
-    @Select("select nick_name from user where userId=#{userId}")
+    @Select("select nickname from user where user_id=#{userId}")
     String getUserNickName(String userId);
 
     /**
