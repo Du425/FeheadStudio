@@ -8,11 +8,16 @@ import com.du.feheadstudio.entity.BriefArticle;
 import com.du.feheadstudio.entity.SimpleArticle;
 import com.du.feheadstudio.mapper.*;
 import com.du.feheadstudio.pojo.ArticleSearchInfo;
+import com.du.feheadstudio.pojo.TopArticleInfo;
 import com.du.feheadstudio.service.IArticleService;
+import org.springframework.data.redis.core.HashOperations;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -32,14 +37,17 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     private final SimpleArticleMapper simpleArticleMapper;
     private final ArticleJumpLineMapper articleJumpLineMapper;
     private final UserMapper userMapper;
+    private final RedisTemplate<String, Object> redisTemplate;
 
     public ArticleServiceImpl(ArticleMapper articleMapper, BriefArticleMapper briefArticleMapper,
-                              SimpleArticleMapper simpleArticleMapper, ArticleJumpLineMapper articleJumpLineMapper, UserMapper userMapper) {
+                              SimpleArticleMapper simpleArticleMapper, ArticleJumpLineMapper articleJumpLineMapper,
+                              UserMapper userMapper, RedisTemplate<String, Object> redisTemplate) {
         this.articleMapper = articleMapper;
         this.briefArticleMapper = briefArticleMapper;
         this.simpleArticleMapper = simpleArticleMapper;
         this.articleJumpLineMapper = articleJumpLineMapper;
         this.userMapper = userMapper;
+        this.redisTemplate = redisTemplate;
     }
 
     /**
@@ -51,7 +59,8 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     @Override
     public Boolean saveArticle(Article article) {
         //设置sort
-        article.setSort(1);
+//        article.setSort(userMapper.getArticleMum(article.getUserId()));
+
         //插入文章
         int insert = articleMapper.insert(article);
         //插入简略信息
@@ -63,7 +72,13 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
                 article.getColumnId(),
                 article.getTitle()
         );
+        briefArticle.setUserId(article.getUserId());
+        briefArticle.setArticleId(article.getArticleId());
         int insertBrief = briefArticleMapper.insert(briefArticle);
+        //用户文章数加1
+        Integer num = userMapper.getArticleMum(article.getUserId());
+        userMapper.updateArticleNum(article.getUserId(), ++num);
+
         return insert > 0 && insertBrief > 0;
     }
 
@@ -84,12 +99,19 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     }
 
     @Override
+    public Boolean topArticle(TopArticleInfo info) {
+        if (info.getOldArticleId() != null) {
+            articleMapper.updateTop(info.getOldArticleId(), 1);
+        }
+        articleMapper.updateTop(info.getNewArticleId(), 0);
+        return true;
+    }
+    @Override
     public Boolean deleteArticle(String articleId) {
         //用户名
         String userId = articleMapper.getUserId(articleId);
         int delete1 = briefArticleMapper.deleteById(articleId);
         int delete2 = articleMapper.deleteById(articleId);
-
         //用户文章数减1
         Integer num = userMapper.getArticleMum(userId);
         userMapper.updateArticleNum(userId, --num);
@@ -101,16 +123,30 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         QueryWrapper<SimpleArticle> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("user_id", userId);
         List<SimpleArticle> selectList = simpleArticleMapper.selectList(queryWrapper);
-        if (selectList!=null){
+        if (selectList != null) {
             selectList.forEach(simpleArticle -> userMapper.getUserNickName(simpleArticle.getUserId()));
-        }else {
-            selectList=new ArrayList<>(1);
+        } else {
+            selectList = new ArrayList<>(1);
         }
         return selectList;
     }
 
     @Override
     public Article getArticleById(String articleId) {
+        //用户文章浏览量加一
+        String userId = articleMapper.getUserId(articleId);
+        SimpleDateFormat format = new SimpleDateFormat("yy-MM-dd");
+        HashOperations<String, Object, Object> forHash = redisTemplate.opsForHash();
+        String date = format.format(new Date());
+
+        //存在就加一
+        if (forHash.hasKey(userId, date)) {
+            Integer integer = (Integer) forHash.get(userId, date);
+            forHash.put(userId, date, ++integer);
+        } else {
+            forHash.put(userId, date, 1);
+        }
+
         //文章浏览量加一
         articleMapper.addOneViewNum(articleId);
         return articleMapper.selectById(articleId);
@@ -151,7 +187,13 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         list.remove(a);
         list.add(b, simpleArticle);
         AtomicInteger size = new AtomicInteger();
-        list.forEach(l -> l.setSort(size.getAndIncrement()));
+        list.forEach(l -> {
+            l.setSort(size.getAndIncrement());
+            QueryWrapper<ArticleJumpLine> wrapper = new QueryWrapper<>();
+            wrapper.eq("user_id", l.getUserId());
+            articleJumpLineMapper.update(l, wrapper);
+        });
+
         return true;
     }
 }
