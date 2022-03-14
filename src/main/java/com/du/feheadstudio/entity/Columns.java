@@ -35,7 +35,9 @@ public class Columns implements Serializable {
 
     private Integer totalArticleNum;
 
-    private Integer top;
+    private Integer top = 1;
+
+    private Integer sort;
 
     private String userId;
 

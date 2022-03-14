@@ -1,5 +1,6 @@
 package com.du.feheadstudio.controller;
 
+import com.du.feheadstudio.pojo.ExchangeInfo;
 import com.du.feheadstudio.pojo.Page;
 import com.du.feheadstudio.pojo.UserSearchInfo;
 import com.du.feheadstudio.response.CommonResult;
@@ -51,4 +52,5 @@ public class ManagerController {
         managerService.recoveryMember(userId);
         return CommonResult.ok();
     }
+
 }

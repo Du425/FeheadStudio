@@ -15,4 +15,6 @@ import com.du.feheadstudio.entity.Columns;
 
 public interface IColumnsService extends IService<Columns> {
 
+    public boolean exchange(int a, int b, String columnId);
+
 }

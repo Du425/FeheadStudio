@@ -86,7 +86,15 @@ public class ColumnController {
         }
     }
 
+    @PostMapping("/top")
+    public CommonResult top(@RequestBody int oldSort,
+                            @RequestBody int newSort,
+                            @RequestBody String columnId){
+        columnService.exchange(oldSort, newSort, columnId);
+        Object o1 = new Object();
 
+        return CommonResult.success("交换完成");
 
+    }
 }
 
