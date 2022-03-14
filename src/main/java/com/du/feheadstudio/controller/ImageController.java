@@ -4,9 +4,11 @@ import com.du.feheadstudio.pojo.Image;
 import com.du.feheadstudio.response.CommonResult;
 import com.du.feheadstudio.service.impl.ImageServiceImpl;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpRequest;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -24,7 +26,7 @@ import java.util.Map;
 @Slf4j
 public class ImageController {
     ImageServiceImpl imageService;
-    private static String URL_PATH = "localhost:8888/api/v1/image/";
+    private static String URL_PATH = "http://192.168.58.1:8888/api/v1/image/onload/";
 
     public ImageController(ImageServiceImpl imageService) {
         this.imageService = imageService;

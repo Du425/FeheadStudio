@@ -148,6 +148,7 @@ public class CommonResult {
                 "code=" + code +
                 ", message='" + message + '\'' +
                 ", data=" + data +
+                ", status='" + status + '\'' +
                 '}';
     }
 }
