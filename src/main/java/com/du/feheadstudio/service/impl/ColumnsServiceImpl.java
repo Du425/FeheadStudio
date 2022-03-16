@@ -37,4 +37,14 @@ public class ColumnsServiceImpl extends ServiceImpl<ColumnsMapper, Columns> impl
         list.forEach(l -> l.setSort(atomicInteger.getAndIncrement()) );
         return true;
     }
+
+    @Override
+    public boolean saveColumns(Columns columns) {
+        columns.setSort(columnsMapper.getTotalArticleNum(columns.getUserId()));
+        int insert = columnsMapper.insert(columns);
+        int columnsNum = columnsMapper.getTotalArticleNum(columns.getUserId());
+        columnsMapper.updateColumnsNum(++columnsNum, columns.getUserId());
+
+        return insert > 0;
+    }
 }

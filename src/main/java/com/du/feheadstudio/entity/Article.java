@@ -60,10 +60,10 @@ public class Article implements Serializable {
      */
     private String columnId;
 
-    @ApiModelProperty("0公开 1隐私")
+    @ApiModelProperty("1公开 0隐私")
     private Integer publishMethod;
 
-    @ApiModelProperty("0已发布 1未发布")
+    @ApiModelProperty("1已发布 0发布")
     private Integer alreadyPublished;
     /**
      * LocalDateTime

@@ -64,7 +64,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         article.setSort(userMapper.getArticleMum(article.getUserId()));
         //插入文章
         int insert = articleMapper.insert(article);
-        //插入简略信息
+        //插入简略信息,获取年月日
         Long publishTime = article.getPublishTime();
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(publishTime);

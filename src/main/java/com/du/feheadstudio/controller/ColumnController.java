@@ -18,6 +18,7 @@ import java.util.List;
  *
  * @author Du425
  * @since 2022-03-06
+ * todo 每次请求都要返回专栏的文章总数
  */
 @RestController
 @RequestMapping("/api/v1/column")
@@ -31,7 +32,7 @@ public class ColumnController {
 
     @PostMapping("/add")
     public CommonResult addColumn(@RequestBody Columns column) {
-        if (columnMapper.insert(column) == 1) {
+        if (columnService.saveColumns(column)) {
             return CommonResult.success("添加成功",column);
         } else {
             return CommonResult.failed("添加失败，请重新操作");
@@ -94,7 +95,9 @@ public class ColumnController {
         Object o1 = new Object();
 
         return CommonResult.success("交换完成");
-
     }
+
+
+
 }
 

@@ -16,7 +16,7 @@ import java.util.List;
  */
 @Data
 @NoArgsConstructor
-public class ArticleInfo implements Serializable {
+public class  ArticleInfo implements Serializable {
     private static final long serialVersionUID = 1L;
     /**
      * 文章id
@@ -50,11 +50,11 @@ public class ArticleInfo implements Serializable {
      */
     private List<String> columnId;
 
-    @ApiModelProperty("0公开 1隐私")
-    private Integer publishMethod;
+    @ApiModelProperty("1公开 0隐私")
+    private Integer publishMethod=0;
 
-    @ApiModelProperty("0已发布 1未发布")
-    private Integer alreadyPublished;
+    @ApiModelProperty("1已发布 0未发布")
+    private Integer alreadyPublished=0;
     /**
      * LocalDateTime
      */
