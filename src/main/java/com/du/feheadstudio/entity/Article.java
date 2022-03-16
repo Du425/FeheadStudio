@@ -86,9 +86,15 @@ public class Article implements Serializable {
         this.publishTime = info.getPublishTime();
         this.alreadyPublished = info.getAlreadyPublished();
         this.publishMethod = info.getPublishMethod();
-        this.columnId = info.getColumnId();
-        this.coverImgId = info.getCoverImgId();
         StringBuilder builder = new StringBuilder();
+        info.getColumnId().forEach(columnId->{
+            builder.append(label);
+            builder.append(',');
+        });
+        this.columnId = builder.toString();
+
+        builder.setLength(0);
+        this.coverImgId = info.getCoverImgId();
         info.getLabel().forEach(label->{
             builder.append(label);
             builder.append(',');
