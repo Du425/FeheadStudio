@@ -8,6 +8,8 @@ import com.du.feheadstudio.pojo.ArticleSearchInfo;
 import com.du.feheadstudio.pojo.ExchangeInfo;
 import com.du.feheadstudio.response.CommonResult;
 import com.du.feheadstudio.service.IArticleService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,6 +21,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/article")
 public class ArticleController {
+
+    @Autowired
     private IArticleService articleService;
 
     public ArticleController(IArticleService articleService) {

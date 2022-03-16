@@ -45,7 +45,8 @@ public class Article implements Serializable {
     private String content;
 
     @ApiModelProperty("图片url")
-    private String coverImgId;
+
+    private String coverImgId="http://192.168.58.1:8888/api/v1/image/onload/0";
     /**
      * 摘要
      */

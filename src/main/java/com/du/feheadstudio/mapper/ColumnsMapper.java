@@ -1,6 +1,6 @@
 package com.du.feheadstudio.mapper;
 
-import com.du.feheadstudio.entity.Column;
+import com.du.feheadstudio.entity.Columns;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.springframework.stereotype.Repository;
 
@@ -13,6 +13,6 @@ import org.springframework.stereotype.Repository;
  * @since 2022-03-04
  */
 @Repository
-public interface ColumnMapper extends BaseMapper<Column> {
+public interface ColumnsMapper extends BaseMapper<Columns> {
 
 }
