@@ -48,7 +48,7 @@ public class ArticleInfo implements Serializable {
     /**
      * 专栏id
      */
-    private String columnId;
+    private List<String> columnId;
 
     @ApiModelProperty("0公开 1隐私")
     private Integer publishMethod;
@@ -75,7 +75,7 @@ public class ArticleInfo implements Serializable {
         this.publishTime = article.getPublishTime();
         this.alreadyPublished = article.getAlreadyPublished();
         this.publishMethod = article.getPublishMethod();
-        this.columnId = article.getColumnId();
+        this.columnId = Arrays.asList(article.getColumnId().split(","));
         this.coverImgId = article.getCoverImgId();
         String[] split = article.getLabel().split(",");
         this.label = Arrays.asList(split);
