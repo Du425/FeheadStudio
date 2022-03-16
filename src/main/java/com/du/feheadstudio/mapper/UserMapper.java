@@ -2,6 +2,7 @@ package com.du.feheadstudio.mapper;
 
 import com.du.feheadstudio.entity.User;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 import org.springframework.stereotype.Repository;
@@ -37,11 +38,10 @@ public interface UserMapper extends BaseMapper<User> {
     /**
      * 更新文章数
      *
-     * @param userId
      * @param articleNum
-     * @return
+     * @param userId
      */
     @Update("update user set article_num=#{articleNum} where user_id=#{userId}")
-    Integer updateArticleNum(String userId, Integer articleNum);
+    void updateArticleNum(@Param("articleNum") Integer articleNum, @Param("userId") String userId);
 
 }

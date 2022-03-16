@@ -13,6 +13,7 @@ import com.du.feheadstudio.service.IArticleService;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -56,11 +57,11 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
      * @param article 文章
      * @return 是否成功
      */
+    @Transactional
     @Override
     public Boolean saveArticle(Article article) {
         //设置sort
-//        article.setSort(userMapper.getArticleMum(article.getUserId()));
-
+        article.setSort(userMapper.getArticleMum(article.getUserId()));
         //插入文章
         int insert = articleMapper.insert(article);
         //插入简略信息
@@ -77,11 +78,11 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         int insertBrief = briefArticleMapper.insert(briefArticle);
         //用户文章数加1
         Integer num = userMapper.getArticleMum(article.getUserId());
-        userMapper.updateArticleNum(article.getUserId(), ++num);
+        userMapper.updateArticleNum(++num,article.getUserId());
 
         return insert > 0 && insertBrief > 0;
     }
-
+    @Transactional
     @Override
     public Boolean updateArticle(Article article) {
         int update = articleMapper.updateById(article);
@@ -97,7 +98,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         briefArticleMapper.updateById(briefArticle);
         return update > 0;
     }
-
+    @Transactional()
     @Override
     public Boolean topArticle(TopArticleInfo info) {
         if (info.getOldArticleId() != null) {
@@ -106,6 +107,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         articleMapper.updateTop(info.getNewArticleId(), 0);
         return true;
     }
+    @Transactional
     @Override
     public Boolean deleteArticle(String articleId) {
         //用户名
@@ -114,7 +116,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         int delete2 = articleMapper.deleteById(articleId);
         //用户文章数减1
         Integer num = userMapper.getArticleMum(userId);
-        userMapper.updateArticleNum(userId, --num);
+        userMapper.updateArticleNum( --num,userId);
         return delete1 > 0 && delete2 > 0;
     }
 
@@ -130,7 +132,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         }
         return selectList;
     }
-
+    @Transactional
     @Override
     public Article getArticleById(String articleId) {
         //用户文章浏览量加一
@@ -177,7 +179,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
 
         return selectList;
     }
-
+    @Transactional
     @Override
     public Boolean exchange(int a, int b, String userId) {
         QueryWrapper<ArticleJumpLine> queryWrapper = new QueryWrapper<>();
@@ -189,9 +191,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         AtomicInteger size = new AtomicInteger();
         list.forEach(l -> {
             l.setSort(size.getAndIncrement());
-            QueryWrapper<ArticleJumpLine> wrapper = new QueryWrapper<>();
-            wrapper.eq("user_id", l.getUserId());
-            articleJumpLineMapper.update(l, wrapper);
+            articleJumpLineMapper.updateById(l);
         });
 
         return true;
